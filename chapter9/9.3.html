@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文本框和Select</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var MyForm = React.createClass({
+		getInitialState:function(){
+			return {
+				defaultText:"Hello World!",
+				defaultOption:"B"
+			};
+		},
+		handleTextarea:function(event){
+			this.setState({
+				defaultText:event.target.value
+			});
+		},
+		handleSelect: function(event) {
+			this.setState({
+				defaultOption:event.target.value
+			});
+		},
+		render:function(){
+    	return (
+    		<form>
+    			<p>// 非约束的</p>
+    			<textarea defaultValue="Hello World!" />
+
+    			<p>// 约束的</p>
+    			<textarea value={this.state.defaultText} onChange={this.handleTextarea} />
+
+    			<p>// 非约束的</p>
+    			<select defaultValue="B">
+						<option value="A">First Option</option>
+	    			<option value="B">Second Option</option>
+	    			<option value="C">Third Option</option>
+    			</select>
+
+    			<p>// 约束的</p>
+    			<select value={this.state.defaultOption} onChange={this.handleSelect}>
+						<option value="A">First Option</option>
+	    			<option value="B">Second Option</option>
+	    			<option value="C">Third Option</option>
+    			</select>
+    		</form>
+    	);
+		}
+	});
+
+	ReactDOM.render(
+		<MyForm />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

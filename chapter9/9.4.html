@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多选Select</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var MyForm = React.createClass({
+		getInitialState: function() {
+			return {
+				options: ["B"]
+			};
+		},
+		handleChange: function(event) {
+			var checked = [];
+			var self = event.target;
+
+			for (var i = 0; i < self.length; i++) {
+				var option = self.options[i];
+				if (option.selected) {
+					checked.push(option.value);
+				}
+			}
+
+			this.setState({
+				options: checked
+			});
+		},
+		handleSubmit: function(event) {
+			event.preventDefault();
+			console.log(this.state.options);
+		},
+
+		render: function(){
+    	return (
+    		<form onSubmit={this.handleSubmit}>
+    			<select multiple="true" value={this.state.options} onChange={this.handleChange}>
+						<option value="A">First Option</option>
+	    			<option value="B">Second Option</option>
+	    			<option value="C">Third Option</option>
+    			</select>
+    			<br />
+    			<button type="submit">Speak</button>
+    		</form>
+    	);
+		}
+	});
+
+	ReactDOM.render(
+		<MyForm />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

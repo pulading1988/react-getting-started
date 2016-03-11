@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>传递 Props</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var FancyCheckbox = React.createClass({
+	  render: function() {
+	    var fancyClass = this.props.checked ? 'FancyChecked' : 'FancyUnchecked';
+    	return (
+      	<div className={fancyClass} onClick={this.props.onClick}>
+        	{this.props.children}
+      	</div>
+    	);
+	  }
+	});
+	ReactDOM.render(
+	  <FancyCheckbox checked={true} onClick={console.log.bind(console)}>
+	    Hello world!
+	  </FancyCheckbox>,
+	  document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

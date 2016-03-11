@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>复选框和单选框 - 非约束的</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var MyForm = React.createClass({
+		handleSubmit: function(e) {
+			e.preventDefault();
+			console.log(this.refs.checked.checked);
+		},
+		render:function(){
+    	return (
+    		<form onSubmit={this.handleSubmit}>
+	    		<input type="checkbox" ref="checked" value="A" defaultChecked="true" />
+	    		<br />
+	    		<button type="submit">Speak</button>
+    		</form>
+    	);
+		}
+	});
+
+	ReactDOM.render(
+		<MyForm />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

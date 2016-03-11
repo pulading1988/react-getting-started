@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多个表单元素与change处理器 - 使用DOMNode的name属性来判断需要更新哪个组件的状态</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var MyForm = React.createClass({
+		getInitialState: function() {
+			return {
+				given_name: "",
+				family_name: ""
+			};
+		},
+		handleChange: function(event) {
+			var newState = {};
+			newState[event.target.name] = event.target.value;
+			this.setState(newState);
+		},
+		handleSubmit: function(event) {
+			event.preventDefault();
+			var words = ["Hi", this.state.given_name, this.state.family_name];
+			console.log(words.join(" "));
+		},
+		render:function() {
+    	return (
+    		<form onSubmit={this.handleSubmit}>
+	    		<label htmlFor="given_name">Given Name:</label>
+	    		<br />
+	    		<input type="text" name="given_name" value={this.state.given_name} onChange={this.handleChange} />
+	    		<br />
+	    		<label htmlFor="family_name">Family Name:</label>
+					<br />
+					<input type="text" name="family_name" value={this.state.family_name} onChange={this.handleChange} />
+					<br />
+	    		<button type="submit">Speak</button>
+    		</form>
+    	);
+		}
+	});
+
+	ReactDOM.render(
+		<MyForm />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

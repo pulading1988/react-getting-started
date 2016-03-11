@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数据绑定 - NoLink</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var NoLink = React.createClass({
+		getInitialState: function() {
+			return {message:'Hello'};
+		},
+		handleChange: function(event) {
+			this.setState({message:event.target.value});
+		},
+		render: function() {
+			var message = this.state.message;
+			return (
+				<div>
+					<input type="text" value={message} onChange={this.handleChange} />
+					<p>{message}</p>
+				</div>
+			);
+		}
+	});
+
+	ReactDOM.render(
+		<NoLink />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

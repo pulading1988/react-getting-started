@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>约束的组件</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<h4>你还可以在用户输入数据时，把它们用在其它的组件上，例如：</h4>
+	<ul>
+		<li>显示一个长度有限的输入框还可以输入多少字符</li>
+		<li>显示输入的HEX值代表的颜色</li>
+		<li>显示可自动匹配下拉列表的可选项</li>
+		<li>使用僌框的值更新其它UI元素</li>
+	</ul>
+	<script type="text/babel">
+	var MyForm = React.createClass({
+		getInitialState:function(){
+			return {
+				helloTo:"Hello World!"
+			};
+		},
+		handleChange:function(event){
+			this.setState({
+				helloTo:event.target.value.toUpperCase()
+			});
+		},
+		handleSubmit: function(event){
+			event.preventDefault();
+			console.log(this.state.helloTo);
+		},
+		render:function(){
+    	return (
+    		<form onSubmit={this.handleSubmit}>
+    			<input type="text" value={this.state.helloTo} onChange={this.handleChange} />
+    			<br />
+    			<button type="submit">Speak</button>
+    		</form>
+    	);
+		}
+	});
+
+	ReactDOM.render(
+		<MyForm />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

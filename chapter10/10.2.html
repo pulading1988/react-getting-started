@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>使用requestAnimationFrame实现间隔渲染</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var Positioner = React.createClass({
+		getInitialState: function() {
+			return {
+				position: 0
+			};
+		},
+		resolveAnimationFrame: function() {
+			var timestamp = new Date();
+			var timeRemaining = Math.max(0, this.props.animationCompleteTimestamp - timestamp);
+			if (timeRemaining > 0) {
+				this.setState({
+					position: timeRemaining
+				});
+			}
+		},
+		componentWillUpdate: function() {
+			if (this.props.animationCompleteTimestamp) {
+				requestAnimationFrame(this.resolveAnimationFrame);
+			}
+		},
+		render: function() {
+			var divStyle = {
+				left: this.state.position
+			};
+
+			return (
+				<div style={divStyle}>
+					This will animate!
+				</div>
+			);
+		}
+	});
+
+	ReactDOM.render(
+		<Positioner />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

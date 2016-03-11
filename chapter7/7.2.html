@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计时器 - 有mixin</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var IntervalMixin = {
+		setInterval: function(callback, interval) {
+			var token = setInterval(callback, interval);
+			this.intervals.push(token);
+		},
+		componentWillMount: function() {
+			this.intervals = [];
+		},
+		componentWillUnmount: function() {
+			this.intervals.map(clearInterval);
+		}
+	};
+
+	var Timer = React.createClass({
+		mixins: [IntervalMixin],
+		getInitialState:function(){
+			return {seconds:0};
+		},
+		componentDidMount:function(){
+			this.setInterval(this.tick, 1000);
+		},
+		tick:function(){
+			this.setState({seconds:this.state.seconds + 1});
+		},
+		render:function(){
+			return(
+				<p>
+        	React has been running for {this.state.seconds} seconds.
+      	</p>
+			);
+		}
+	});
+
+	ReactDOM.render(
+		<Timer />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

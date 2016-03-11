@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2014年1月1日到目前为止的总秒数 - 有mixin</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var IntervalMixin = {
+		setInterval: function(callback, interval) {
+			var token = setInterval(callback, interval);
+			this.intervals.push(token);
+		},
+		componentWillMount: function() {
+			this.intervals = [];
+		},
+		componentWillUnmount: function() {
+			this.intervals.map(clearInterval);
+		}
+	};
+	
+	var Since2014 = React.createClass({
+		mixins: [IntervalMixin],
+		componentDidMount: function() {
+			this.setInterval(this.forceUpdate.bind(this), 1000);
+		},
+		render: function() {
+			var from = Number(new Date(2014, 0 ,1));
+			var to = Date.now();
+    	return (
+    		<div>
+					{Math.round((to - from) / 1000)}
+    		</div>
+    	);
+		}
+	});
+
+	ReactDOM.render(
+		<Since2014 />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>

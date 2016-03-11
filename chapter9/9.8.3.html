@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多个表单元素与change处理器 - 双向数据绑定，复杂度增加，不建议使用</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+	<div id="content"></div>
+	<script type="text/babel">
+	var MyForm = React.createClass({
+		mixins: [React.addons.LinkedStateMixin],
+		getInitialState: function() {
+			return {
+				given_name: "",
+				family_name: ""
+			};
+		},
+		handleSubmit: function(event) {
+			event.preventDefault();
+			var words = ["Hi", this.state.given_name, this.state.family_name];
+			console.log(words.join(" "));
+		},
+		render:function() {
+    	return (
+    		<form onSubmit={this.handleSubmit}>
+	    		<label htmlFor="given_name">Given Name:</label>
+	    		<br />
+	    		<input type="text" name="given_name" valueLink={this.linkState('given_name')} />
+	    		<br />
+	    		<label htmlFor="family_name">Family Name:</label>
+					<br />
+					<input type="text" name="family_name" valueLink={this.linkState('family_name')} />
+					<br />
+	    		<button type="submit">Speak</button>
+    		</form>
+    	);
+		}
+	});
+
+	ReactDOM.render(
+		<MyForm />,
+		document.getElementById('content')
+	);
+	</script>
+</body>
+</html>
